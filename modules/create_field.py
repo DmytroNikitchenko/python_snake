@@ -1,5 +1,4 @@
 # створення поля
-from blessed import Terminal
 
 def create_field(width=10, height=10):
     """Створює двовимірне поле як список рядків"""

@@ -173,21 +173,26 @@ def main(width, height, time_interval):
 
 
 def select_difficulty():
-    difficulties = {"1":"легко", "2":"середньо", "3":"важко", "4":"налаштувати самому"}
+    difficulties = {"1":"легко \t(0.5с)", "2":"середньо \t(0.35с)", "3":"важко \t(0.20с)", "4":"налаштувати самому"}
     
     for mode_num in difficulties:
         print(f"{mode_num}: {difficulties[mode_num]}")
-    selected = input("оберіть складність: ")
+    selected = input("Оберіть складність: ")
     match selected:
-        case "1":
+        case "1" | "легко" | "0.5с" | "0.5":
             return 0.5
-        case "2":
+        case "2" | "середньо" | "0.35с" | "0.35":
             return 0.35
-        case "3": 
+        case "3" | "важко" | "0.20с" | "0.25": 
             return 0.2
-        case "4":
-            time_interval = float(input("оберіть інтервал переміщень змійки (наприклад 0.25): "))
-            return time_interval
+        case "4" | "налаштувати самому":
+            time_interval = float(input("Введіть інтервал переміщень змійки в секундах (наприклад 0.25): "))
+            return time_interval     
+        case _:
+            os.system('cls||clear')
+            print("Оберіть складність з перелічених")
+            select_difficulty()
+            
 
 # запуск
 if __name__ == "__main__":
