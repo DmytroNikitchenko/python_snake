@@ -8,31 +8,43 @@ from modules import *
 #  глобальні змінні
 score = 0        # рахунок гравця
 game_over = False
+
 last_key = "d"   # напрямок глобальний
+
 term = Terminal()
+
+SNAKE_COLOR = term.green
+HEAD_COLOR = term.bright_green
+PRIZE_COLOR = term.red
+WALL_COLOR = term.black
 
 #  функція відображення поля
 def print_field(field, snake_body, prize_pos, message=""):
     """Виводить поле на екран"""
     display_field = [list(row) for row in field]
-     
+         
+    for y, row in enumerate(display_field):
+        for x, char in enumerate(row):
+            if char == "█":
+                display_field[y][x] = WALL_COLOR("█")
+         
     py, px = snake_body[0]
     
     match last_key:
         case "w":
-            display_field[py][px] = "↑"
+            display_field[py][px] = HEAD_COLOR("↑")
         case "a":
-            display_field[py][px] = "←"
+            display_field[py][px] = HEAD_COLOR("←")
         case "s":
-            display_field[py][px] = "↓"
+            display_field[py][px] = HEAD_COLOR("↓")
         case "d":
-            display_field[py][px] = "→"
+            display_field[py][px] = HEAD_COLOR("→")
                
     ry, rx = prize_pos
     
-    display_field[ry][rx] = "*"
+    display_field[ry][rx] = PRIZE_COLOR("*")
     for part_y, part_x in snake_body[1:]: # з другого елемента
-        display_field[part_y][part_x] = "O"
+        display_field[part_y][part_x] = SNAKE_COLOR("O")
         
     
     print(term.home + term.clear_eol, end = '')
@@ -42,8 +54,9 @@ def print_field(field, snake_body, prize_pos, message=""):
     for row in display_field:
         output.append("".join(row))
     
-    print()
+    print() 
     print('\n'.join(output)) # друк поля 
+    
     
     print(f"Score: {score}\n")
     if message:
@@ -66,7 +79,7 @@ def move_player(player_pos, direction, field, snake_body):
         new_head[1] += 1
 
     # Перевірка на стіну
-    if field[new_head[0]][new_head[1]] == "#":
+    if field[new_head[0]][new_head[1]] == "█":
         game_over = True
         return player_pos # Повертаємо стару позицію, щоб гравець не зайшов у стіну
     
@@ -95,7 +108,7 @@ def on_key_press(event):
         game_over = True
 
 # основна функція 
-def main(width, height):
+def main(width, height, time_interval):
     global score, game_over, last_key    
     field = create_field(width, height)
     
@@ -126,7 +139,7 @@ def main(width, height):
             print_field(field, snake_body, prize_pos, message)
             
             #  затримка 
-            time.sleep(0.15)
+            time.sleep(time_interval)
 
             # оновлення  
             player_pos = move_player(player_pos, last_key, field, snake_body)
@@ -148,7 +161,7 @@ def main(width, height):
         if is_win:
             final_message = "🎊 ПЕРЕМОГА! 🎊"
         else:
-            final_message = "💥 ЗІТКНЕННЯ ЗІ СТІНОЮ! 💥"
+            final_message = "💥 ЗІТКНЕННЯ ЗІ СТІНОЮ АБО СОБОЮ! 💥"
         
         # фінальний стан поля та повідомлення
         print_field(field, snake_body, prize_pos, final_message)
@@ -158,10 +171,29 @@ def main(width, height):
     os.system('cls||clear')
     print_field(field, snake_body, prize_pos, final_message)
 
-        
+
+def select_difficulty():
+    difficulties = {"1":"легко", "2":"середньо", "3":"важко", "4":"налаштувати самому"}
+    
+    for mode_num in difficulties:
+        print(f"{mode_num}: {difficulties[mode_num]}")
+    selected = input("оберіть складність: ")
+    match selected:
+        case "1":
+            return 0.5
+        case "2":
+            return 0.35
+        case "3": 
+            return 0.2
+        case "4":
+            time_interval = float(input("оберіть інтервал переміщень змійки (наприклад 0.25): "))
+            return time_interval
+
 # запуск
 if __name__ == "__main__":
     os.system('cls||clear')
+    time_interval = select_difficulty()
     width = int(input("Введіть ширину поля (не менше 3): "))
     heigth = int(input("Введіть висоту поля (не менше 3): "))
-    main(width, heigth)
+    
+    main(width, heigth, time_interval)

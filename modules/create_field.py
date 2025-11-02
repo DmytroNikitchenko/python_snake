@@ -1,4 +1,6 @@
 # створення поля
+from blessed import Terminal
+
 def create_field(width=10, height=10):
     """Створює двовимірне поле як список рядків"""
     field = []
@@ -6,8 +8,8 @@ def create_field(width=10, height=10):
         row = ""
         for x in range(width):
             if y == 0 or y == height - 1 or x == 0 or x == width - 1:
-                row += "#"  # стіни
+                row += "█"  # стіни
             else:
-                row += " "  # порожнеча
+                row += " "  # порожнеча        
         field.append(row)
     return field
