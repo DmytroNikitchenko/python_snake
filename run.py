@@ -1,6 +1,7 @@
 import keyboard
 import time
 import random
+import os
 from blessed import Terminal
 from modules import *
 
@@ -153,6 +154,9 @@ def main(width, height):
         print(f"\nГру завершено. Ваш фінальний рахунок: {score}")
         
         keyboard.unhook_all()
+    os.system('cls||clear')
+    print_field(field, snake_body, prize_pos, message)
+
         
 # запуск
 if __name__ == "__main__":
