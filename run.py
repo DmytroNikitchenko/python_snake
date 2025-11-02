@@ -41,7 +41,8 @@ def print_field(field, snake_body, prize_pos, message=""):
     
     for row in display_field:
         output.append("".join(row))
-        
+    
+    print()
     print('\n'.join(output)) # друк поля 
     
     print(f"Score: {score}\n")
@@ -155,11 +156,12 @@ def main(width, height):
         
         keyboard.unhook_all()
     os.system('cls||clear')
-    print_field(field, snake_body, prize_pos, message)
+    print_field(field, snake_body, prize_pos, final_message)
 
         
 # запуск
 if __name__ == "__main__":
+    os.system('cls||clear')
     width = int(input("Введіть ширину поля (не менше 3): "))
     heigth = int(input("Введіть висоту поля (не менше 3): "))
     main(width, heigth)
