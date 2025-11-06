@@ -1,8 +1,6 @@
 import keyboard
 import time
 import random
-import os
-from blessed import Terminal
 from modules import *
 
 #  глобальні змінні
@@ -10,57 +8,6 @@ score = 0        # рахунок гравця
 game_over = False
 
 last_key = "d"   # напрямок глобальний
-
-term = Terminal()
-
-SNAKE_COLOR = term.green
-HEAD_COLOR = term.bright_green
-PRIZE_COLOR = term.red
-WALL_COLOR = term.black
-
-#  функція відображення поля
-def print_field(field, snake_body, prize_pos, message=""):
-    """Виводить поле на екран"""
-    display_field = [list(row) for row in field]
-         
-    for y, row in enumerate(display_field):
-        for x, char in enumerate(row):
-            if char == "█":
-                display_field[y][x] = WALL_COLOR("█")
-         
-    py, px = snake_body[0]
-    
-    match last_key:
-        case "w":
-            display_field[py][px] = HEAD_COLOR("↑")
-        case "a":
-            display_field[py][px] = HEAD_COLOR("←")
-        case "s":
-            display_field[py][px] = HEAD_COLOR("↓")
-        case "d":
-            display_field[py][px] = HEAD_COLOR("→")
-               
-    ry, rx = prize_pos
-    
-    display_field[ry][rx] = PRIZE_COLOR("*")
-    for part_y, part_x in snake_body[1:]: # з другого елемента
-        display_field[part_y][part_x] = SNAKE_COLOR("O")
-        
-    
-    print(term.home + term.clear_eol, end = '')
-
-    output = []
-    
-    for row in display_field:
-        output.append("".join(row))
-    
-    print() 
-    print('\n'.join(output)) # друк поля 
-    
-    
-    print(f"Score: {score}\n")
-    if message:
-        print(message)
         
 # рух гравця
 def move_player(player_pos, direction, field, snake_body):
@@ -116,6 +63,9 @@ def main(width, height, time_interval):
     player_pos = snake_body[0]
     
     prize_pos = [random.randint(1, height - 2), random.randint(1, width - 2)]
+    while prize_pos in snake_body: # Перевірка, чи приз не з'явився на будь-якій частині тіла
+        prize_pos = [random.randint(1, height - 2), random.randint(1, width - 2)]
+            
     is_win = False #  true/false для визначення перемоги
 
     def new_prize():
@@ -129,14 +79,14 @@ def main(width, height, time_interval):
         while not game_over:
             # відображення 
             message = ""
-            if 0 < score < ((width-2) * (height-2))//2*10:
+            if 0 < score < 100:
                 message = "Ранг: 🟢 Початківець"
-            elif ((width-2) * (height-2))//2 <= score < ((width-2) * (height-2))*10:
+            elif 100 <= score < 200:
                 message = "Ранг: 🟠 Досвідчений"
-            elif score >= ((width-2) * (height-2))*10:
+            elif score >= 200:
                 message = "Ранг: 🏆 Майстер"
             
-            print_field(field, snake_body, prize_pos, message)
+            print_field(field, snake_body, prize_pos, last_key, score, message)
             
             #  затримка 
             time.sleep(time_interval)
@@ -161,44 +111,12 @@ def main(width, height, time_interval):
         if is_win:
             final_message = "🎊 ПЕРЕМОГА! 🎊"
         else:
-            final_message = "💥 ЗІТКНЕННЯ ЗІ СТІНОЮ АБО СОБОЮ! 💥"
+            final_message = "💥 ПРОГРАШ 💥"       
         
-        # фінальний стан поля та повідомлення
-        print_field(field, snake_body, prize_pos, final_message)
-        print(f"\nГру завершено. Ваш фінальний рахунок: {score}")
-        
+        save_result_to_file(score, width, height)
         keyboard.unhook_all()
-    os.system('cls||clear')
-    print_field(field, snake_body, prize_pos, final_message)
-
-
-def select_difficulty():
-    difficulties = {"1":"легко \t(0.5с)", "2":"середньо \t(0.35с)", "3":"важко \t(0.20с)", "4":"налаштувати самому"}
-    
-    for mode_num in difficulties:
-        print(f"{mode_num}: {difficulties[mode_num]}")
-    selected = input("Оберіть складність: ")
-    match selected:
-        case "1" | "легко" | "0.5с" | "0.5":
-            return 0.5
-        case "2" | "середньо" | "0.35с" | "0.35":
-            return 0.35
-        case "3" | "важко" | "0.20с" | "0.25": 
-            return 0.2
-        case "4" | "налаштувати самому":
-            time_interval = float(input("Введіть інтервал переміщень змійки в секундах (наприклад 0.25): "))
-            return time_interval     
-        case _:
-            os.system('cls||clear')
-            print("Оберіть складність з перелічених")
-            select_difficulty()
-            
+    end_screen(field, snake_body, prize_pos, last_key, score, message + "\n" + final_message)
 
 # запуск
 if __name__ == "__main__":
-    os.system('cls||clear')
-    time_interval = select_difficulty()
-    width = int(input("Введіть ширину поля (не менше 3): "))
-    heigth = int(input("Введіть висоту поля (не менше 3): "))
-    
-    main(width, heigth, time_interval)
+    start_game()
