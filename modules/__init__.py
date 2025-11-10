@@ -6,3 +6,6 @@ from .print_field import *
 from .save_result_to_file import *
 from .select_difficulty import *
 from .start_game import *
+
+from .utils import *
+from .game_logic import *

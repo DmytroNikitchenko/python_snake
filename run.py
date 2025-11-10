@@ -113,10 +113,10 @@ def main(width, height, time_interval):
         else:
             final_message = "💥 ПРОГРАШ 💥"       
         
-        save_result_to_file(score, width, height)
+        save_result_to_file(score, width, height, time_interval)
         keyboard.unhook_all()
     end_screen(field, snake_body, prize_pos, last_key, score, message + "\n" + final_message)
 
 # запуск
 if __name__ == "__main__":
-    start_game()
+    start_game()   

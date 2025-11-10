@@ -3,7 +3,7 @@ from blessed import Terminal
 term = Terminal()
 
 SNAKE_COLOR = term.green
-HEAD_COLOR = term.bright_green
+HEAD_COLOR = term.green
 PRIZE_COLOR = term.red
 WALL_COLOR = term.black
 

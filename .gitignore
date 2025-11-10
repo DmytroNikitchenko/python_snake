@@ -215,5 +215,6 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
-# Text
+# variables
 *.txt
+player.json

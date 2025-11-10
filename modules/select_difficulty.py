@@ -15,8 +15,8 @@ def select_difficulty():
         case "3" | "важко" | "0.20с" | "0.25": 
             return 0.2
         case "4" | "налаштувати самому":
-            time_interval = float(input("Введіть інтервал переміщень змійки в секундах (наприклад 0.25): "))
-            return time_interval     
+            time_interval = (input("Введіть інтервал переміщень змійки в секундах (наприклад 0.25): "))
+            return float(time_interval.replace(",","."))     
         case _:
             os.system('cls||clear')
             print("Оберіть складність з перелічених")
