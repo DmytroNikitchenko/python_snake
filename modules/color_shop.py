@@ -21,14 +21,19 @@ COLOR_SHOP = {
 def color_shop():
     os.system("cls||clear")
     print("---МАГАЗИН КОЛЬОРІВ---")   
-    print("Натисніть [1] для відкриття покупки, або [2] для перегляду свого гардеробу")
+    print("Натисніть [1] для відкриття покупки, або [2] для перегляду свого гардеробу, або [3] для виходу")
     while True:
         event = keyboard.read_event()
         if event.event_type == keyboard.KEY_DOWN:
             if event.name == '1':
+                keyboard.unhook_all()
                 buy_color()
-            elif event.name == '2':    
+            elif event.name == '2': 
+                keyboard.unhook_all()   
                 select_color()      
+            elif event.name == '3':
+                keyboard.unhook_all()
+                return
     
 def buy_color():
     for color, price in COLOR_SHOP.items():
@@ -60,9 +65,9 @@ def select_color():
     for color in player.get_owned_colors():
         print(color)
         markers = []
-        if "term."+color == player.get_body_color():
+        if color == player.get_body_color():
             markers.append("[тіло] ")
-        if "term."+color == player.get_head_color():
+        if color == player.get_head_color():
             markers.append("[голова] ")
         if markers:            
             print(term.move_up(1) + term.move_right(len(color) + 1) + "".join(markers))

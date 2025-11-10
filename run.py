@@ -7,7 +7,8 @@ from modules import *
 score = 0        # рахунок гравця
 game_over = False
 last_key = "d"   # напрямок глобальний
-        
+count_of_eaten = 0
+
 # рух гравця
 def move_player(player_pos, direction, field, snake_body):
     """Рухає гравця і перевіряє межі поля"""
@@ -59,7 +60,12 @@ def main(width, height, time_interval):
     
     score = 0
     game_over = False
+    count_of_eaten = 0
     last_key = "d"
+
+    
+    is_mega_food = False
+    growth = 0    
     
     field = create_field(width, height)
     
@@ -75,10 +81,16 @@ def main(width, height, time_interval):
     is_win = False #  true/false для визначення перемоги
 
     def new_prize():
-        nonlocal prize_pos        
+        nonlocal prize_pos, is_mega_food, growth
         prize_pos = [random.randint(1, height - 2), random.randint(1, width - 2)]
         while prize_pos in snake_body: # Перевірка, чи приз не з'явився на будь-якій частині тіла
             prize_pos = [random.randint(1, height - 2), random.randint(1, width - 2)]
+            
+        if random.random() < 0.10:
+            is_mega_food = True            
+        else:
+            is_mega_food = False            
+        
 
     keyboard.on_press(on_key_press, suppress=True)
     with term.fullscreen():
@@ -91,7 +103,7 @@ def main(width, height, time_interval):
             elif score >= 200:
                 message = "Ранг: 🏆 Майстер"
             
-            print_field(field, snake_body, prize_pos, last_key, score, message)
+            print_field(field, snake_body, prize_pos, last_key, score, message, is_mega_food)
             
             #  затримка 
             time.sleep(time_interval)
@@ -104,10 +116,17 @@ def main(width, height, time_interval):
 
             if player_pos == prize_pos:
                 score += 10
+                if is_mega_food:
+                    growth += 3
+                    score += 30
+                count_of_eaten += 1
                 new_prize()
-            else:
-                if len(snake_body)>1:                
-                    snake_body.pop()
+            else:               
+                if growth > 0:
+                    growth -= 1  
+                else:
+                    if len(snake_body)>1:                
+                        snake_body.pop()
 
             if score >= ((width-2) * (height-2))*10:
                 is_win = True
@@ -118,10 +137,10 @@ def main(width, height, time_interval):
         else:
             final_message = "💥 ПРОГРАШ 💥"       
         
-        save_result_to_file(score, width, height, time_interval)
+        save_log_json(score, width, height, time_interval)
         player.set_player_money(+score/5)    
         keyboard.unhook_all()
-    return end_screen(field, snake_body, prize_pos, last_key, score, message + "\n" + final_message)
+    return end_screen(field, snake_body, prize_pos, last_key, score, message + f"\nЯблук з'їдено: {count_of_eaten} \t|\tМонеток зароблено: {score/5}"+ "\n" + final_message)
 
 # запуск
 if __name__ == "__main__":

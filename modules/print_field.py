@@ -1,4 +1,5 @@
 from blessed import Terminal
+import random
 from .game_logic import *
 term = Terminal()
 
@@ -18,7 +19,7 @@ HEAD_COLOR = COLOR_MAP[f"{player.get_head_color()}"]
 PRIZE_COLOR = term.red
 WALL_COLOR = term.black
 
-def print_field(field, snake_body, prize_pos, last_key, score, message=""):
+def print_field(field, snake_body, prize_pos, last_key, score, message="", is_mega_food = False):
     """Виводить поле на екран"""    
     display_field = [list(row) for row in field]
          
@@ -41,7 +42,11 @@ def print_field(field, snake_body, prize_pos, last_key, score, message=""):
                
     ry, rx = prize_pos
     
-    display_field[ry][rx] = PRIZE_COLOR("*")
+    if is_mega_food:
+        display_field[ry][rx] = term.green("*")
+    else:
+        display_field[ry][rx] = PRIZE_COLOR("*")
+    
     for part_y, part_x in snake_body[1:]: # з другого елемента
         display_field[part_y][part_x] = SNAKE_COLOR + ("O")
         
