@@ -8,7 +8,7 @@ from .game_logic import *
 
 term = Terminal()
 
-#player = Snake()
+player = Snake()
 
 COLOR_SHOP = {
     "green": 0,
@@ -31,11 +31,10 @@ def color_shop():
                 select_color()      
     
 def buy_color():
-    player = load_player_data()
     for color, price in COLOR_SHOP.items():
-        if color not in player["owned_color"]:
+        if color not in player.get_owned_colors():
             print(f"{color}: {price}")
-    print(f"Ваш рахунок: {player["money"]}")
+    print(f"Ваш рахунок: {player.get_money()}")
          
     while True:
         selected = input("Оберіть колір для покупки (напишіть назву), або введіть [q] для повернення: ")
@@ -46,26 +45,24 @@ def buy_color():
             time.sleep(1)
             os.system('cls||clear') 
             return color_shop()
-        if player["money"] < COLOR_SHOP[selected]:
+        if player.get_money() < COLOR_SHOP[selected]:
             print("Недостатньо коштів!")
             time.sleep(1)
             os.system('cls||clear') 
             return color_shop()
-        player["money"] -= COLOR_SHOP[selected]
-        player["owned_color"].append(selected)
-        save_player_data(player)
+        player.set_player_money(-COLOR_SHOP[selected])
+        player.add_owned_color(selected)
         print("Успішна покупка!")
         time.sleep(1.5)
         return color_shop()
     
-def select_color():
-    player = load_player_data()
-    for color in player["owned_color"]:
+def select_color():    
+    for color in player.get_owned_colors():
         print(color)
         markers = []
-        if "term."+color == player["snake_color"]:
+        if "term."+color == player.get_body_color():
             markers.append("[тіло] ")
-        if "term."+color == player["head_color"]:
+        if "term."+color == player.get_head_color():
             markers.append("[голова] ")
         if markers:            
             print(term.move_up(1) + term.move_right(len(color) + 1) + "".join(markers))
@@ -74,14 +71,13 @@ def select_color():
         selected = input("Оберіть колір для вибору (напишіть назву), або введіть [q] для повернення: ")
         if selected == "q":            
             return color_shop()
-        elif selected not in player["owned_color"]:
+        elif selected not in player.get_owned_colors():
             print("Введіть коректний колір!")
             time.sleep(1)
             os.system('cls||clear') 
             return color_shop()        
-        player["money"] -= COLOR_SHOP[selected]
-        player["owned_color"].append(selected)
-        save_player_data(player)
+        player.set_player_money(-COLOR_SHOP[selected]) 
+        player.add_owned_color(selected)
         print("Успішна покупка!")
         time.sleep(1.5)
         return color_shop()

@@ -1,9 +1,11 @@
 from blessed import Terminal
-
+from .game_logic import *
 term = Terminal()
 
-SNAKE_COLOR = term.green
-HEAD_COLOR = term.green
+player = Snake()
+
+SNAKE_COLOR = getattr(term, player.get_body_color())
+HEAD_COLOR = getattr(term, player.get_head_color())
 PRIZE_COLOR = term.red
 WALL_COLOR = term.black
 
@@ -20,19 +22,19 @@ def print_field(field, snake_body, prize_pos, last_key, score, message=""):
     
     match last_key:
         case "w":
-            display_field[py][px] = HEAD_COLOR("↑")
+            display_field[py][px] = HEAD_COLOR + ("↑")
         case "a":
-            display_field[py][px] = HEAD_COLOR("←")
+            display_field[py][px] = HEAD_COLOR + ("←")
         case "s":
-            display_field[py][px] = HEAD_COLOR("↓")
+            display_field[py][px] = HEAD_COLOR + ("↓")
         case "d":
-            display_field[py][px] = HEAD_COLOR("→")
+            display_field[py][px] = HEAD_COLOR + ("→")
                
     ry, rx = prize_pos
     
     display_field[ry][rx] = PRIZE_COLOR("*")
     for part_y, part_x in snake_body[1:]: # з другого елемента
-        display_field[part_y][part_x] = SNAKE_COLOR("O")
+        display_field[part_y][part_x] = SNAKE_COLOR + ("O")
         
     
     print(term.home, end="")

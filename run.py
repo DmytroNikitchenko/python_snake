@@ -6,7 +6,6 @@ from modules import *
 #  глобальні змінні
 score = 0        # рахунок гравця
 game_over = False
-
 last_key = "d"   # напрямок глобальний
         
 # рух гравця
@@ -57,7 +56,14 @@ def on_key_press(event):
 # основна функція 
 def main(width, height, time_interval):
     global score, game_over, last_key    
+    
+    score = 0
+    game_over = False
+    last_key = "d"
+    
     field = create_field(width, height)
+    
+    message = ""
     
     snake_body = [[(height//2)-1, (width//2)-1]]
     player_pos = snake_body[0]
@@ -77,8 +83,7 @@ def main(width, height, time_interval):
     keyboard.on_press(on_key_press, suppress=True)
     with term.fullscreen():
         while not game_over:
-            # відображення 
-            message = ""
+            # відображення             
             if 0 < score < 100:
                 message = "Ранг: 🟢 Початківець"
             elif 100 <= score < 200:
@@ -114,8 +119,9 @@ def main(width, height, time_interval):
             final_message = "💥 ПРОГРАШ 💥"       
         
         save_result_to_file(score, width, height, time_interval)
+        player.set_player_money(+score/5)    
         keyboard.unhook_all()
-    end_screen(field, snake_body, prize_pos, last_key, score, message + "\n" + final_message)
+    return end_screen(field, snake_body, prize_pos, last_key, score, message + "\n" + final_message)
 
 # запуск
 if __name__ == "__main__":

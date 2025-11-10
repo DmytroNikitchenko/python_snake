@@ -16,5 +16,5 @@ def end_screen(field, snake_body, prize_pos, last_key, score, message):
                 return start_game()
             elif event.name == "esc":            
                 keyboard.unhook_all()
-                return
+                return    
         
