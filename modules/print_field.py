@@ -4,8 +4,17 @@ term = Terminal()
 
 player = Snake()
 
-SNAKE_COLOR = getattr(term, player.get_body_color())
-HEAD_COLOR = getattr(term, player.get_head_color())
+COLOR_MAP = {
+    "green": term.green,
+    "yellow": term.yellow,
+    "magenta": term.magenta,
+    "cyan": term.cyan,
+    "white": term.white
+}
+
+
+SNAKE_COLOR = COLOR_MAP[f"{player.get_body_color()}"]
+HEAD_COLOR = COLOR_MAP[f"{player.get_head_color()}"]
 PRIZE_COLOR = term.red
 WALL_COLOR = term.black
 
@@ -22,13 +31,13 @@ def print_field(field, snake_body, prize_pos, last_key, score, message=""):
     
     match last_key:
         case "w":
-            display_field[py][px] = HEAD_COLOR + ("↑")
+            display_field[py][px] = HEAD_COLOR("↑")
         case "a":
-            display_field[py][px] = HEAD_COLOR + ("←")
+            display_field[py][px] = HEAD_COLOR("←")
         case "s":
-            display_field[py][px] = HEAD_COLOR + ("↓")
+            display_field[py][px] = HEAD_COLOR("↓")
         case "d":
-            display_field[py][px] = HEAD_COLOR + ("→")
+            display_field[py][px] = HEAD_COLOR("→")
                
     ry, rx = prize_pos
     

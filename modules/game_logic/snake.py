@@ -5,16 +5,16 @@ class Snake():
         self._player = load_player_data()        
              
     def get_head_color(self):
-        return self._player["head_color"]
+        return self._player["head_color"].replace("term.", "")
     
     def get_body_color(self):
-        return self._player["snake_color"]
+        return self._player["snake_color"].replace("term.", "")
     
     def get_owned_colors(self):
         return self._player["owned_color"]
     
     def get_money(self):
-        return self._player["money"]
+        return self._player["money"]  
     
     def set_head_color(self, color):
         self._player["head_color"] = color
