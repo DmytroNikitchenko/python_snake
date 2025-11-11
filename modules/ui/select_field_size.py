@@ -8,13 +8,13 @@ def select_field_size(width=10, height=10):
     try:
         width = float(input("Введіть ширину поля (не менше 3): "))
         match width:
-            case (w) if (w%1 is 0) | (w>=3):
+            case (w) if (w%1 == 0) & (w>=3):
                 pass                   
             case _:
                 print("Введіть коректне значення ширини!")
                 time.sleep(1.5)
                 return select_field_size() 
-    except ValueError:
+    except:
         print("Введіть коректне значення ширини!")
         time.sleep(1.5)
         return select_field_size()
@@ -22,13 +22,13 @@ def select_field_size(width=10, height=10):
     try:
         height = float(input("Введіть висоту поля (не менше 3): "))
         match height:        
-            case (h) if (h%1 is 0) | (h>=3):            
+            case (h) if (h%1 == 0) & (h>=3):            
                 pass
             case _:
                 print("Введіть коректне значення висоти!")
                 time.sleep(1.5)
                 return select_field_size()
-    except ValueError:
+    except:
         print("Введіть коректне значення ширини!")
         time.sleep(1.5)
         return select_field_size()   

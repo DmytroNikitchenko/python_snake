@@ -7,7 +7,19 @@ COLOR_MAP = {
     "yellow": term.yellow,
     "magenta": term.magenta,
     "cyan": term.cyan,
-    "white": term.white
+    "white": term.white,
+    "red": term.red,
+    "blue": term.blue,
+    "gray": term.gray,
+    
+    "orange": term.color(208),
+    "brown": term.color(94),
+    "teal_gray": term.color(37),
+    "indigo": term.color(54),
+    "pink_red": term.color(197),
+    "steel_blue": term.color(67),
+    "olive": term.color(100),
+    "beige": term.color(181)
 }
 
 PRIZE_COLOR = term.red

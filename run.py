@@ -43,15 +43,15 @@ def on_key_press(event):
     global last_key, game_over
     key = event.name
     
-    if key == "w" and last_key != "s":
+    if (key in ("w", "ц")) and last_key != "s":
         last_key = "w"
-    elif key == "s" and last_key != "w":
+    elif (key in ("s", "і")) and last_key != "w":
         last_key = "s"
-    elif key == "a" and last_key != "d":
+    elif (key in ("a", "ф")) and last_key != "d":
         last_key = "a"
-    elif key == "d" and last_key != "a":
+    elif (key in ("d", "в")) and last_key != "a":
         last_key = "d"
-    elif key == "q":
+    elif key in ("q", "й"):
         game_over = True
 
 # основна функція 

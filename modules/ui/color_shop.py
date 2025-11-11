@@ -15,7 +15,18 @@ COLOR_SHOP = {
     "yellow": 50,
     "magenta": 100,
     "cyan": 150,
-    "white": 200
+    "white": 200,
+    "red": 75,           
+    "blue": 90,          
+    "gray": 40,          
+    "orange": 120,       
+    "brown": 60,         
+    "teal_gray": 130,    
+    "indigo": 160,       
+    "pink_red": 180,     
+    "steel_blue": 110,   
+    "olive": 70,         
+    "beige": 140         
 }
 
 def color_shop():

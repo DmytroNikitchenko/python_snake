@@ -16,7 +16,15 @@ def select_time_interval():
             return 0.2
         case "4" | "налаштувати самому":
             time_interval = (input("Введіть інтервал переміщень змійки в секундах (наприклад 0.25): "))
-            return float(time_interval.replace(",","."))     
+            try:
+                if float(time_interval)<=0:
+                    raise Exception
+                return float(time_interval.replace(",","."))                     
+            except:
+                os.system('cls||clear')
+                print("-----НАЛАШТУВАННЯ ГРИ-----")
+                print("Оберіть коректну складність:")
+                return select_time_interval()
         case _:
             os.system('cls||clear')
             print("-----НАЛАШТУВАННЯ ГРИ-----")
