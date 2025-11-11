@@ -2,6 +2,8 @@ import os
 import json
 
 def load_player_data():
+    """завантаження даних про гравця та його налаштування"""
+
     if not os.path.exists("player.json") or os.path.getsize("player.json") == 0:
         player = {"money":0, "snake_color":"green", "head_color":"green", "owned_color":["green"]}
         with open("player.json", "w") as f:

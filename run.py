@@ -143,5 +143,5 @@ def main(width, height, time_interval):
     return end_screen(field, snake_body, prize_pos, last_key, score, message + f"\nЯблук з'їдено: {count_of_eaten} \t|\tМонеток зароблено: {score/5}"+ "\n" + final_message)
 
 # запуск
-if __name__ == "__main__":
-    start_game()   
+if __name__ == "__main__":       
+    menu()

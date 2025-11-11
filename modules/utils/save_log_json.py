@@ -3,6 +3,7 @@ import json
 import os
 import datetime
 def save_log_json(result, width, height, time_interval):
+    """збереження даних про забіг"""
     record = {
         "result":result,
         "time_interval":time_interval,
@@ -24,5 +25,5 @@ def save_log_json(result, width, height, time_interval):
     
     data.append(record)
     
-    with open("log.json", "a") as f1:
+    with open("log.json", "w") as f1:
         json.dump(data, f1, indent=4)

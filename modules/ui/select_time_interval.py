@@ -1,7 +1,7 @@
 import os
 
-def select_difficulty():
-    """Обирання складності"""
+def select_time_interval():
+    """налаштування інтервалу"""
     difficulties = {"1":"легко \t(0.5с)", "2":"середньо \t(0.35с)", "3":"важко \t(0.20с)", "4":"налаштувати самому"}
     
     for mode_num in difficulties:
@@ -19,5 +19,6 @@ def select_difficulty():
             return float(time_interval.replace(",","."))     
         case _:
             os.system('cls||clear')
-            print("Оберіть складність з перелічених")
-            return select_difficulty()
+            print("-----НАЛАШТУВАННЯ ГРИ-----")
+            print("Оберіть складність з перелічених:")
+            return select_time_interval()
