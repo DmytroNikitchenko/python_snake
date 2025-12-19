@@ -5,11 +5,11 @@ import datetime
 def save_log_json(result, width, height, time_interval):
     """збереження даних про забіг"""
     record = {
-        "result":result,
-        "time_interval":time_interval,
-        "field_width":width,
-        "field_height":height,
-        "start_time":datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "result": result,
+        "time_interval": time_interval,
+        "field_width": width,
+        "field_height": height,
+        "start_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
     }
     
     filename = "log.json"

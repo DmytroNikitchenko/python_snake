@@ -6,3 +6,5 @@ from .print_field import *
 from .utils import *
 from .game_logic import *
 from .ui import *
+
+#__all__ = []

@@ -81,7 +81,7 @@ def main(width, height, time_interval):
     is_win = False #  true/false для визначення перемоги
 
     def new_prize():
-        nonlocal prize_pos, is_mega_food, growth
+        nonlocal prize_pos, is_mega_food
         prize_pos = [random.randint(1, height - 2), random.randint(1, width - 2)]
         while prize_pos in snake_body: # Перевірка, чи приз не з'явився на будь-якій частині тіла
             prize_pos = [random.randint(1, height - 2), random.randint(1, width - 2)]
@@ -107,7 +107,8 @@ def main(width, height, time_interval):
             
             #  затримка 
             time.sleep(time_interval)
-
+            # TODO DIRECTION
+            
             # оновлення  
             player_pos = move_player(player_pos, last_key, field, snake_body)
 
