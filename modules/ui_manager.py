@@ -87,6 +87,9 @@ class UIManager:
                 keyboard.unhook_all()
                 if event.name == '1':
                     result = self.run_game(width, height, time_interval, obstacle_count, game_mode)
+                    
+                    self.player.refresh()
+                    
                     self.show_end_screen(result)
                     return
                 elif event.name == '2':

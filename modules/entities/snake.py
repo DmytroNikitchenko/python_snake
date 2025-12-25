@@ -81,6 +81,13 @@ class Snake(BaseEntity):
 
         return new_head
 
+    def teleport_head(self, position: Tuple[int, int]):
+        """телепортація голови у нову позицію"""
+        # змінюємо координати голови (перший елемент списку)
+        self._body[0] = position
+        # оновлюємо базову позицію сутності
+        self._position = position
+
     def grow(self, amount: int = 1):
         """додавання зростання для змійки"""
         self._pending_growth += amount

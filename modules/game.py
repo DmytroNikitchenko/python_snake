@@ -127,8 +127,7 @@ class Game:
                 exit_pos = self.field.get_teleport_exit(self.snake.head)
                 if exit_pos:
                     # телепорт голови змійки на точку виходу
-                    self.snake._body[0] = exit_pos
-                    self.snake._position = exit_pos
+                    self.snake.teleport_head(exit_pos)
 
             self.check_collisions()
 
